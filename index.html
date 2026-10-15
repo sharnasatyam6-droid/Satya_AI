@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090b12">
+  <meta name="description" content="Satya AI — a personal AI assistant for learning, coding, and everyday questions.">
+  <title>Satya AI — Your AI, your way</title>
+  <style>
+    :root{color-scheme:dark;--bg:#090b12;--panel:#10131d;--panel2:#151927;--line:#252b3b;--text:#f4f6ff;--muted:#9ba4ba;--accent:#8b7cff;--accent2:#52d7c5}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 70% -10%,#25204b 0,transparent 45%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+    button,textarea{font:inherit}button{cursor:pointer}.app{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;max-width:1600px;margin:auto}
+    aside{border-right:1px solid var(--line);padding:24px 16px;display:flex;flex-direction:column;gap:22px;background:#0b0d15c9}
+    .brand{display:flex;align-items:center;gap:11px;padding:0 8px}.logo{width:39px;height:39px;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#080a12;font-weight:900;font-size:18px;box-shadow:0 5px 24px #8b7cff35}.brand strong{font-size:17px;letter-spacing:.2px}.brand small{display:block;color:var(--muted);font-size:11px}
+    .newchat{border:1px solid #45405f;background:#18172a;color:#fff;border-radius:12px;padding:11px 13px;text-align:left;display:flex;gap:9px;align-items:center}.newchat:hover{background:#22203b}.side-label{font-size:10px;letter-spacing:1.6px;color:#69738b;font-weight:800;padding:0 10px}.suggestions{display:grid;gap:7px}.suggestion{border:1px solid transparent;background:transparent;color:#c4cbdd;text-align:left;padding:10px;border-radius:10px}.suggestion:hover{background:var(--panel2);border-color:var(--line)}.sidebottom{margin-top:auto;color:var(--muted);font-size:12px;padding:10px}.online{display:inline-block;width:7px;height:7px;background:var(--accent2);border-radius:50%;margin-right:7px}
+    main{display:flex;flex-direction:column;min-width:0;min-height:100vh}.topbar{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,4vw,54px);border-bottom:1px solid #20243380}.modelpill{display:flex;gap:9px;align-items:center;color:#d9dcef;font-weight:650}.spark{color:var(--accent2)}.topright{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:7px 10px;border-radius:99px}
+    .content{width:min(850px,100%);margin:0 auto;padding:40px 24px 20px;flex:1;display:flex;flex-direction:column}.welcome{margin:auto 0;text-align:center;padding:36px 0 42px}.orb{width:64px;height:64px;margin:0 auto 22px;border-radius:22px;display:grid;place-items:center;background:linear-gradient(135deg,#29234d,#132f3b);border:1px solid #47416d;color:#c5beff;font-size:27px;box-shadow:0 0 60px #7e6cff16}.welcome h1{font-size:clamp(30px,5vw,46px);letter-spacing:-1.7px;line-height:1.12;margin:0 0 14px}.gradient{background:linear-gradient(90deg,#c0b7ff,#7ce4d8);color:transparent;background-clip:text}.welcome p{color:var(--muted);max-width:470px;margin:0 auto 26px}.prompts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:600px;margin:auto}.prompt{background:#111521;border:1px solid var(--line);border-radius:13px;padding:13px;text-align:left;color:#dbe0ef;transition:.15s}.prompt:hover{border-color:#6d60bc;transform:translateY(-1px)}.prompt span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+    #messages{display:flex;flex-direction:column;gap:23px;padding:8px 0 28px}.message{display:flex;gap:12px;align-items:flex-start;animation:up .2s ease}.message.user{flex-direction:row-reverse}.avatar{width:32px;height:32px;flex:0 0 32px;border-radius:11px;display:grid;place-items:center;background:#211e3a;color:#c7bfff;font-weight:800;font-size:12px}.user .avatar{background:#1b3437;color:#80e8d8}.bubble{max-width:min(690px,calc(100% - 46px));padding:12px 15px;border-radius:4px 15px 15px 15px;background:#121622;border:1px solid #252b3a;white-space:pre-wrap;overflow-wrap:anywhere}.user .bubble{background:#211f36;border-color:#393454;border-radius:15px 4px 15px 15px}.bubble p{margin:0}.typing{color:var(--muted);font-size:13px}.error{color:#ffb4b4}.composer-wrap{position:sticky;bottom:0;padding:18px 24px 15px;background:linear-gradient(transparent,var(--bg) 20%)}.composer{width:min(800px,100%);margin:auto;border:1px solid #34394c;background:#121521;border-radius:18px;padding:10px;box-shadow:0 12px 50px #0005}.composer:focus-within{border-color:#7668cf;box-shadow:0 0 0 3px #8b7cff14}.composer textarea{display:block;width:100%;resize:none;max-height:180px;min-height:48px;border:0;outline:0;background:transparent;color:var(--text);padding:10px 10px 5px}.composer textarea::placeholder{color:#747e96}.composer-foot{display:flex;align-items:center;justify-content:space-between;padding:6px 2px 0 9px;color:#7f899f;font-size:11px}.send{width:37px;height:37px;border:0;border-radius:12px;background:linear-gradient(135deg,#b0a4ff,#65ddcf);color:#10111a;font-size:19px;font-weight:900}.send:disabled{opacity:.45;cursor:not-allowed}.disclaimer{text-align:center;color:#69738a;font-size:10px;margin:10px auto 0;max-width:800px}.mobilebrand{display:none}
+    @keyframes up{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:760px){.app{grid-template-columns:1fr}aside{display:none}.topbar{height:62px;padding:0 18px}.mobilebrand{display:block;font-weight:800}.content{padding:25px 16px 10px}.welcome{padding:45px 0}.prompts{grid-template-columns:1fr}.prompt:nth-child(n+3){display:none}.composer-wrap{padding:12px 12px 10px}.topright{font-size:10px}.welcome h1{letter-spacing:-1px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand"><div class="logo">S</div><div><strong>Satya AI</strong><small>Think. Build. Discover.</small></div></div>
+    <button class="newchat" id="newChat"><span>＋</span> New conversation</button>
+    <div class="side-label">TRY ASKING</div>
+    <div class="suggestions">
+      <button class="suggestion" data-prompt="Teach me Python step by step with a small example.">⌘ &nbsp; Learn to code</button>
+      <button class="suggestion" data-prompt="Help me break down a difficult problem into clear steps.">✧ &nbsp; Solve a problem</button>
+      <button class="suggestion" data-prompt="Help me make a realistic study plan for this week.">◷ &nbsp; Plan my week</button>
+      <button class="suggestion" data-prompt="Explain how AI language models work in simple terms.">◎ &nbsp; Understand AI</button>
+    </div>
+    <div class="sidebottom"><div><span class="online"></span>Assistant interface ready</div><p>Built for curiosity, learning and creativity.</p></div>
+  </aside>
+  <main>
+    <header class="topbar"><div class="modelpill"><span class="spark">✦</span><span class="mobilebrand">Satya AI</span><span class="desktopmodel">Personal assistant</span></div><div class="topright">AI can make mistakes</div></header>
+    <section class="content">
+      <div id="welcome" class="welcome">
+        <div class="orb">✦</div>
+        <h1>Hey there.<br><span class="gradient">What are we exploring?</span></h1>
+        <p>Your space to think out loud, learn something new, write code, and turn ideas into action.</p>
+        <div class="prompts">
+          <button class="prompt" data-prompt="Teach me Python step by step with a small example.">⌘ &nbsp; Learn something new<span>Explain a concept clearly</span></button>
+          <button class="prompt" data-prompt="Help me debug a programming problem. Ask for the code and error if needed.">⌁ &nbsp; Build with code<span>Debug, create, and improve</span></button>
+          <button class="prompt" data-prompt="Help me make a practical plan to reach a goal.">↗ &nbsp; Make a plan<span>Turn a goal into next steps</span></button>
+          <button class="prompt" data-prompt="Give me three creative ideas for a beginner-friendly project.">✧ &nbsp; Brainstorm ideas<span>Explore something original</span></button>
+        </div>
+      </div>
+      <div id="messages" aria-live="polite"></div>
+    </section>
+    <div class="composer-wrap">
+      <form class="composer" id="chatForm">
+        <textarea id="prompt" rows="1" maxlength="8000" placeholder="Message Satya AI..." aria-label="Message Satya AI"></textarea>
+        <div class="composer-foot"><span>Enter to send · Shift + Enter for a new line</span><button class="send" id="send" type="submit" aria-label="Send message">↑</button></div>
+      </form>
+      <div class="disclaimer">Satya AI is an independent project. Verify important information and never share passwords or sensitive personal data.</div>
+    </div>
+  </main>
+</div>
+<script>
+(() => {
+  const form = document.getElementById('chatForm');
+  const input = document.getElementById('prompt');
+  const send = document.getElementById('send');
+  const messages = document.getElementById('messages');
+  const welcome = document.getElementById('welcome');
+  let history = [];
+  let busy = false;
+  function resize(){ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,180)+'px'; }
+  function addMessage(role,text,extra=''){
+    const wrap=document.createElement('div'); wrap.className='message '+(role==='user'?'user':'assistant');
+    const avatar=document.createElement('div'); avatar.className='avatar'; avatar.textContent=role==='user'?'YOU':'S';
+    const bubble=document.createElement('div'); bubble.className='bubble '+extra;
+    const p=document.createElement('p'); p.textContent=text; bubble.appendChild(p);
+    wrap.append(avatar,bubble); messages.appendChild(wrap); wrap.scrollIntoView({behavior:'smooth',block:'end'}); return {wrap,bubble,p};
+  }
+  async function submit(text){
+    text=(text||input.value).trim(); if(!text||busy)return;
+    welcome.style.display='none'; addMessage('user',text); input.value=''; resize(); busy=true; send.disabled=true;
+    const pending=addMessage('assistant','Thinking…','typing');
+    try{
+      const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,history})});
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok) throw new Error(data.error||'The assistant could not respond. Please try again.');
+      const reply=typeof data.reply==='string'&&data.reply.trim()?data.reply:'I could not generate a reply. Please try again.';
+      pending.p.textContent=reply; pending.bubble.className='bubble'; history.push({role:'user',content:text},{role:'assistant',content:reply}); history=history.slice(-20);
+    }catch(e){pending.p.textContent=e.message;pending.bubble.className='bubble error';}
+    finally{busy=false;send.disabled=false;input.focus();}
+  }
+  form.addEventListener('submit',e=>{e.preventDefault();submit();});
+  input.addEventListener('input',resize);
+  input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submit();}});
+  document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>{submit(b.dataset.prompt);}));
+  document.getElementById('newChat').addEventListener('click',()=>{history=[];messages.innerHTML='';welcome.style.display='';input.value='';resize();input.focus();});
+})();
+</script>
+</body>
+</html>
